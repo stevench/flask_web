@@ -1,0 +1,12 @@
+server {
+  listen 80;
+  server_name localhost;
+
+  location / {
+    include uwsgi_params;
+    uwsgi_pass 127.0.0.1:8000;
+    uwsgi_param UWSGI_PYHOME /root/blog;
+    uwsgi_param UWSGI_CHDIR /root/blog;
+    uwsgi_param UWSGI_SCRIPT main:app;
+  }
+}
