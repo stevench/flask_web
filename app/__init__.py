@@ -16,7 +16,7 @@ login_manager.login_view = 'author.login'
 
 
 def create_app(config_name):
-    from . import models, router
+    from . import api, models, router
     app = Flask(__name__)
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
@@ -25,6 +25,7 @@ def create_app(config_name):
     moment.init_app(app)
     login_manager.init_app(app)
     sess.init_app(app)
+    api.init_app(app)
     models.init_app(app)
     router.init_app(app)
 
