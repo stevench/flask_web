@@ -26,7 +26,7 @@ class DevelopmentConfig(Config):
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME') or 'steven'
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD') or 'steven'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL_MYSQL') or \
-                              'mysql+pymysql://root:steven@localhost:3306/flask'
+                              'mysql+pymysql://root:steven@localhost:3306/flask?charset=utf8mb4'
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 

@@ -6,6 +6,7 @@ class User(db.Model):
     __tablename__ = 'tb_user'
 
     id = db.Column(db.Integer, primary_key=True)
+    uuid = db.Column(db.String(256), nullable=False)
     username = db.Column(db.String(256), unique=True, nullable=False, index=True)
     password_hash = db.Column(db.String(256), nullable=False)
 

@@ -41,5 +41,14 @@ def register():
     else:
         username = request.form.get('username', None)
         password = request.form.get('password', None)
-        dic = {'username': username, 'password': password}
+        print("***************8")
+        print(username)
+        print(password)
+        print("****************")
+        uuid = create_uuid(username)
+        dic = {'uuid': uuid, 'username': username, 'password': password}
+        print(dic)
+        user = User(uuid=uuid, username=username, password=password)
+        db.session.add(user)
+        db.session.commit()
         return dic
