@@ -2,26 +2,21 @@
 from flask import Flask
 from flask_mail import Mail
 from flask_moment import Moment
-from flask_sqlalchemy import SQLAlchemy
 from config import config
-
 
 mail = Mail()
 moment = Moment()
-db = SQLAlchemy()
 
 
 def create_app(config_name):
+    from . import models, router
     app = Flask(__name__)
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 
     mail.init_app(app)
     moment.init_app(app)
-    db.init_app(app)
-
-    #注册蓝本
-    from .user import user as user_blueprint
-    app.register_blueprint(user_blueprint)
+    models.init_app(app)
+    router.init_app(app)
 
     return app

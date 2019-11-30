@@ -25,8 +25,10 @@ class DevelopmentConfig(Config):
     MAIL_USE_SSL = False
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME') or 'steven'
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD') or 'steven'
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DEV_DATABASE_URL") or \
-        'sqlite:///' + os.path.join(base_dir, 'data-dev.sqlite')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL_MYSQL') or \
+                              'mysql+pymysql://root:steven@localhost:3306/flask'
+    SQLALCHEMY_COMMIT_ON_TEARDOWN = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 
 class TestingConfig(Config):
