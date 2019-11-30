@@ -1,5 +1,7 @@
 # -*- encoding: utf-8 -*-
 import os
+import redis
+
 base_dir = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -29,6 +31,11 @@ class DevelopmentConfig(Config):
                               'mysql+pymysql://root:steven@localhost:3306/flask?charset=utf8mb4'
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = True
+    SESSION_TYPE = 'redis'
+    SESSION_PERMANENT = False
+    SESSION_USE_SIGNER = False
+    #SESSION_KEY_PERFIX = 'session:'
+    SESSION_REDIS = redis.Redis(host='127.0.0.1', port=6379,db=0)
 
 
 class TestingConfig(Config):

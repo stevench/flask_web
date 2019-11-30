@@ -1,8 +1,11 @@
 # -*- encoding: utf-8 -*-
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
+from app import login_manager
 from .base import db
 
-class User(db.Model):
+
+class User(UserMixin, db.Model):
     __tablename__ = 'tb_user'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -23,3 +26,8 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.username
+
+#加载用户回调函数
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))

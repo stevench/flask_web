@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 from flask import request, redirect, session, render_template
+from flask_login import login_user
 from app.models.models import User
 from app.utils import create_uuid
 from app.models import db
@@ -21,7 +22,8 @@ def login():
         remember_me = request.form.get("remember-me", None)
         print(username, password, remember_me)
         user = User.query.filter_by(username=username).first()
-        if user and user.password == password:
+        if user and user.verify_password:
+            login_user(user)
             if remember_me:
                 uuid = create_uuid(username)
                 user.uuid = uuid
@@ -41,14 +43,14 @@ def register():
     else:
         username = request.form.get('username', None)
         password = request.form.get('password', None)
-        print("***************8")
-        print(username)
-        print(password)
-        print("****************")
         uuid = create_uuid(username)
-        dic = {'uuid': uuid, 'username': username, 'password': password}
-        print(dic)
         user = User(uuid=uuid, username=username, password=password)
         db.session.add(user)
         db.session.commit()
-        return dic
+        return redirect("/")
+
+@user_bp.route("/index", methods=["get"])
+def home():
+    print("******write session to redis*******")
+    session["a"] = "a"
+    return "index"
